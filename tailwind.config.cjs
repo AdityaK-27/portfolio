@@ -1,17 +1,11 @@
-// tailwind.config.cjs
 module.exports = {
-  darkMode: 'class', // we toggle dark mode via a CSS class
-  content: ['./index.html', './src/**/*.{js,jsx}'],
+  darkMode: "class",
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
-    extend: {
-      colors: {
-        // optional brand color
-        sky: {
-          600: '#0ea5e9',
-          700: '#0369a1',
-        },
-      },
-    },
+    extend: {},
   },
   plugins: [],
-}
+};
