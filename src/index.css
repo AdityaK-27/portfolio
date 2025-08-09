@@ -1,19 +1,16 @@
-/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* system font stack for a professional look */
 :root {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
+
 html, body, #root {
   height: 100%;
   font-family: var(--font-sans);
 }
 
-/* smooth scroll for anchor links */
-html { scroll-behavior: smooth; }
-
-/* small utility tweaks (optional) */
-a { color: inherit; text-decoration: none; }
+html {
+  scroll-behavior: smooth;
+}
