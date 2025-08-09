@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useEffect, useState } from "react";
 import { Github, Linkedin, FileText, Sun, Moon, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
@@ -57,7 +56,7 @@ const certs = [
 ];
 
 export default function App() {
-  const [dark, setDark] = useState(true); // default to dark mode
+  const [dark, setDark] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -80,12 +79,18 @@ export default function App() {
     <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* NAVBAR */}
       <header className="sticky top-0 z-50 backdrop-blur bg-gray-900/80 border-b border-gray-800">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <a href="#hero" className="font-semibold text-lg">{personal.name}</a>
+        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+          {/* Small profile image */}
+          <a href="#hero" className="flex items-center">
+            <img
+              src="/images/aditya.jpg"
+              alt="Aditya"
+              className="w-10 h-10 rounded-full object-cover ring-2 ring-sky-500 p-0.5 hover:scale-105 transition-transform"
+            />
+          </a>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex gap-4 items-center">
-            <NavLink href="#hero">Home</NavLink>
             <NavLink href="#about">About</NavLink>
             <NavLink href="#projects">Projects</NavLink>
             <NavLink href="#experience">Experience</NavLink>
@@ -122,7 +127,6 @@ export default function App() {
         {/* Mobile menu */}
         {menuOpen && (
           <div className="md:hidden bg-gray-900 border-t border-gray-800 px-6 py-4 space-y-2">
-            <NavLink href="#hero">Home</NavLink>
             <NavLink href="#about">About</NavLink>
             <NavLink href="#projects">Projects</NavLink>
             <NavLink href="#experience">Experience</NavLink>
@@ -136,20 +140,12 @@ export default function App() {
       <main className="max-w-6xl mx-auto px-6">
         {/* HERO */}
         <section id="hero" className="py-24 text-center">
-          <motion.img
-            src="/images/aditya.jpg"
-            alt="Aditya portrait"
-            className="mx-auto w-44 h-44 rounded-full object-cover shadow-2xl ring-4 ring-sky-500 p-1"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          />
           <motion.h1
             className="mt-6 text-4xl md:text-5xl font-bold"
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
           >
-            Hi — I’m {personal.name}
+            Hi, I’m {personal.name}
           </motion.h1>
           <p className="mt-4 text-gray-300 max-w-2xl mx-auto">{personal.role}</p>
         </section>
@@ -163,7 +159,7 @@ export default function App() {
           <img
             src="/images/aditya.jpg"
             alt="Aditya portrait"
-            className="w-48 h-48 rounded-full object-cover shadow-lg ring-4 ring-indigo-500 p-1"
+            className="w-56 h-56 rounded-full object-cover shadow-lg ring-4 ring-indigo-500 p-1"
           />
         </section>
 
