@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Github, Linkedin, FileText, Sun, Moon, Menu, X } from "lucide-react";
+import React, { useState } from "react";
+import { Github, Linkedin, FileText, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 
 const personal = {
@@ -56,22 +56,7 @@ const certs = [
 ];
 
 export default function App() {
-  const [dark, setDark] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(true);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setDark(savedTheme === "dark");
-      document.documentElement.classList.toggle("dark", savedTheme === "dark");
-    }
-  }, []);
-  
-  // Update HTML class + save to localStorage whenever theme changes
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-    localStorage.setItem("theme", dark ? "dark" : "light");
-  }, [dark]);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const NavLink = ({ href, children }) => (
     <a
@@ -84,7 +69,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-gray-100">
+    <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* NAVBAR */}
       <header className="sticky top-0 z-50 backdrop-blur bg-gray-900/80 border-b border-gray-800">
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
@@ -115,14 +100,8 @@ export default function App() {
             </a>
           </nav>
 
-          {/* Dark mode toggle + menu */}
+          {/* Mobile menu button */}
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => setDark(!dark)}
-              className="p-2 rounded hover:bg-gray-800"
-            >
-              {dark ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
             <button
               className="md:hidden p-2 rounded hover:bg-gray-800"
               onClick={() => setMenuOpen(!menuOpen)}
