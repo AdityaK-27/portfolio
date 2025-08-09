@@ -3,11 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Github, Linkedin, FileText, Sun, Moon, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 
-/*
-  Replace the values in the `personal` object if you want to update contact info.
-  Image path expects: public/images/aditya.jpg
-*/
-
 const personal = {
   name: "Aditya Kankarwal",
   role: "Data Analyst & ML Enthusiast",
@@ -19,8 +14,9 @@ const personal = {
   resumePdf: "/AdityaKankarwal_DS-5.pdf",
 };
 
-const summary =
-  "I’m a curious Computer Science student who transforms data into actionable insights. I build dashboards, data pipelines, and models — and present results clearly using SQL, Python, Power BI, and visualization best practices.";
+const aboutText = `I’m a curious Computer Science student who transforms data into actionable insights.
+I build dashboards, data pipelines, and models — and present results clearly using SQL, Python, Power BI, and visualization best practices.
+When I’m not analyzing data, I’m learning new technologies to stay ahead in the field.`;
 
 const projects = [
   {
@@ -50,16 +46,8 @@ const projects = [
 ];
 
 const skills = [
-  "MySQL",
-  "PostgreSQL",
-  "Python",
-  "TensorFlow",
-  "Power BI",
-  "Git",
-  "Tableau",
-  "ETL",
-  "Data Cleaning",
-  "Data Modeling",
+  "MySQL", "PostgreSQL", "Python", "TensorFlow", "Power BI",
+  "Git", "Tableau", "ETL", "Data Cleaning", "Data Modeling",
 ];
 
 const certs = [
@@ -69,76 +57,62 @@ const certs = [
 ];
 
 export default function App() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true); // default to dark mode
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Toggle tailwind 'dark' class on <html> — requires tailwind config darkMode: 'class'
   useEffect(() => {
     const root = document.documentElement;
     if (dark) root.classList.add("dark");
     else root.classList.remove("dark");
   }, [dark]);
 
-  // Close mobile menu on navigation
-  useEffect(() => {
-    const closeOnResize = () => {
-      if (window.innerWidth >= 768) setMenuOpen(false);
-    };
-    window.addEventListener("resize", closeOnResize);
-    return () => window.removeEventListener("resize", closeOnResize);
-  }, []);
-
   const NavLink = ({ href, children }) => (
     <a
       href={href}
       onClick={() => setMenuOpen(false)}
-      className="block md:inline-block px-2 py-1 rounded hover:text-sky-600 transition-colors"
+      className="block md:inline-block px-3 py-2 rounded hover:text-sky-400 transition-colors"
     >
       {children}
     </a>
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      {/* ===== HEADER / NAV ===== */}
-      <header className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-4xl mx-auto px-6 py-3 flex items-center justify-between">
-          <a href="#hero" className="font-semibold text-lg">
-            {personal.name}
-          </a>
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      {/* NAVBAR */}
+      <header className="sticky top-0 z-50 backdrop-blur bg-gray-900/80 border-b border-gray-800">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <a href="#hero" className="font-semibold text-lg">{personal.name}</a>
 
-          <div className="flex items-center gap-3">
-            {/* desktop nav */}
-            <nav className="hidden md:flex gap-4 items-center text-sm">
-              <NavLink href="#hero">Home</NavLink>
-              <NavLink href="#projects">Projects</NavLink>
-              <NavLink href="#experience">Experience</NavLink>
-              <NavLink href="#skills">Skills</NavLink>
-              <NavLink href="#certifications">Certifications</NavLink>
-              <NavLink href="#contact">Contact</NavLink>
+          {/* Desktop nav */}
+          <nav className="hidden md:flex gap-4 items-center">
+            <NavLink href="#hero">Home</NavLink>
+            <NavLink href="#about">About</NavLink>
+            <NavLink href="#projects">Projects</NavLink>
+            <NavLink href="#experience">Experience</NavLink>
+            <NavLink href="#skills">Skills</NavLink>
+            <NavLink href="#certifications">Certifications</NavLink>
+            <NavLink href="#contact">Contact</NavLink>
+            <a
+              href={personal.resumePdf}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-indigo-500 px-4 py-2 rounded-md text-sm font-medium"
+            >
+              <FileText size={14} /> Resume
+            </a>
+          </nav>
 
-              <a
-                href={personal.resumePdf}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 rounded-md text-sm"
-              >
-                <FileText size={14} /> Resume
-              </a>
-            </nav>
-
+          {/* Dark mode toggle + menu */}
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => setDark((d) => !d)}
-              aria-label="Toggle theme"
-              className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+              onClick={() => setDark(!dark)}
+              className="p-2 rounded hover:bg-gray-800"
             >
               {dark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-
             <button
-              className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
-              aria-label="Open menu"
-              onClick={() => setMenuOpen((s) => !s)}
+              className="md:hidden p-2 rounded hover:bg-gray-800"
+              onClick={() => setMenuOpen(!menuOpen)}
             >
               {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -147,137 +121,85 @@ export default function App() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-            <div className="px-6 py-4 space-y-2">
-              <NavLink href="#hero">Home</NavLink>
-              <NavLink href="#projects">Projects</NavLink>
-              <NavLink href="#experience">Experience</NavLink>
-              <NavLink href="#skills">Skills</NavLink>
-              <NavLink href="#certifications">Certifications</NavLink>
-              <NavLink href="#contact">Contact</NavLink>
-
-              <a
-                href={personal.resumePdf}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 mt-2 bg-sky-600 hover:bg-sky-700 text-white px-3 py-2 rounded-md"
-              >
-                <FileText size={14} /> Resume
-              </a>
-            </div>
+          <div className="md:hidden bg-gray-900 border-t border-gray-800 px-6 py-4 space-y-2">
+            <NavLink href="#hero">Home</NavLink>
+            <NavLink href="#about">About</NavLink>
+            <NavLink href="#projects">Projects</NavLink>
+            <NavLink href="#experience">Experience</NavLink>
+            <NavLink href="#skills">Skills</NavLink>
+            <NavLink href="#certifications">Certifications</NavLink>
+            <NavLink href="#contact">Contact</NavLink>
           </div>
         )}
       </header>
 
-      {/* ===== MAIN CONTENT (stacked sections) ===== */}
-      <main className="max-w-4xl mx-auto px-6">
+      <main className="max-w-6xl mx-auto px-6">
         {/* HERO */}
-        <section id="hero" className="py-20 text-center">
-          <img
+        <section id="hero" className="py-24 text-center">
+          <motion.img
             src="/images/aditya.jpg"
-            alt={`${personal.name} portrait`}
-            className="mx-auto w-40 h-40 rounded-full object-cover shadow-lg mb-6"
+            alt="Aditya portrait"
+            className="mx-auto w-44 h-44 rounded-full object-cover shadow-2xl ring-4 ring-sky-500 p-1"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
           />
-
           <motion.h1
-            initial={{ y: -8, opacity: 0 }}
+            className="mt-6 text-4xl md:text-5xl font-bold"
+            initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-3xl md:text-4xl font-bold leading-tight"
           >
             Hi — I’m {personal.name}
           </motion.h1>
+          <p className="mt-4 text-gray-300 max-w-2xl mx-auto">{personal.role}</p>
+        </section>
 
-          <p className="mt-4 text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-            {summary}
-          </p>
-
-          <div className="mt-8 flex justify-center gap-3 flex-wrap">
-            <a
-              href={personal.resumePdf}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-md"
-            >
-              Download Resume
-            </a>
-
-            <a
-              href={personal.github}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-md"
-            >
-              <Github size={16} /> GitHub
-            </a>
-
-            <a
-              href={personal.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-md"
-            >
-              <Linkedin size={16} /> LinkedIn
-            </a>
+        {/* ABOUT */}
+        <section id="about" className="py-24 border-t border-gray-700 flex flex-col md:flex-row items-center gap-10">
+          <div className="md:w-2/3">
+            <h2 className="text-3xl font-bold border-b-4 border-sky-500 inline-block pb-1 mb-6">About Me</h2>
+            <p className="text-gray-300 leading-relaxed">{aboutText}</p>
           </div>
+          <img
+            src="/images/aditya.jpg"
+            alt="Aditya portrait"
+            className="w-48 h-48 rounded-full object-cover shadow-lg ring-4 ring-indigo-500 p-1"
+          />
         </section>
 
         {/* PROJECTS */}
-        <section id="projects" className="py-20 border-t border-gray-100">
-          <h2 className="text-2xl font-bold">Selected projects</h2>
-          <p className="mt-2 text-sm text-gray-600">
-            Projects that show my end-to-end work — ETL, modeling, visualization,
-            and deployment.
-          </p>
-
-          <div className="mt-6 space-y-6">
+        <section id="projects" className="py-24 border-t border-gray-700">
+          <h2 className="text-3xl font-bold border-b-4 border-sky-500 inline-block pb-1 mb-10">Projects</h2>
+          <div className="space-y-6">
             {projects.map((p) => (
-              <article
-                key={p.title}
-                className="p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-800 rounded-lg shadow-sm"
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-semibold text-lg">{p.title}</h3>
-                    <div className="text-xs text-gray-500 mt-1">{p.tech} • {p.date}</div>
-                  </div>
+              <div key={p.title} className="p-6 bg-gray-800 rounded-lg shadow hover:shadow-lg transition">
+                <h3 className="text-xl font-semibold">{p.title}</h3>
+                <p className="text-sm text-gray-400">{p.tech} • {p.date}</p>
+                <p className="mt-3 text-gray-300">{p.desc}</p>
+                <div className="mt-4 flex gap-4">
+                  {p.github && <a href={p.github} className="text-sky-400 hover:underline">GitHub</a>}
+                  {p.live && <a href={p.live} className="text-sky-400 hover:underline">Live Demo</a>}
                 </div>
-
-                <p className="mt-3 text-gray-700 dark:text-gray-300">{p.desc}</p>
-
-                <div className="mt-4 flex gap-3">
-                  {p.github && (
-                    <a href={p.github} target="_blank" rel="noreferrer" className="text-sm inline-flex items-center gap-2">
-                      <Github size={14} /> Code
-                    </a>
-                  )}
-                  {p.live && (
-                    <a href={p.live} target="_blank" rel="noreferrer" className="text-sm inline-flex items-center gap-2">
-                      Live demo
-                    </a>
-                  )}
-                </div>
-              </article>
+              </div>
             ))}
           </div>
         </section>
 
         {/* EXPERIENCE */}
-        <section id="experience" className="py-20 border-t border-gray-100">
-          <h2 className="text-2xl font-bold">Experience</h2>
-
-          <div className="mt-6 space-y-6">
-            <div className="p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-800 rounded-lg">
-              <div className="font-semibold">Data Analytics Intern — Reliance Industries Ltd.</div>
-              <div className="text-sm text-gray-500">On-site • June 2025</div>
-              <ul className="mt-3 list-disc list-inside text-sm">
+        <section id="experience" className="py-24 border-t border-gray-700">
+          <h2 className="text-3xl font-bold border-b-4 border-sky-500 inline-block pb-1 mb-10">Experience</h2>
+          <div className="space-y-6">
+            <div className="p-6 bg-gray-800 rounded-lg shadow">
+              <h3 className="font-semibold">Data Analytics Intern — Reliance Industries Ltd.</h3>
+              <p className="text-sm text-gray-400">On-site • June 2025</p>
+              <ul className="list-disc list-inside mt-3 text-gray-300">
                 <li>Built a live Power BI dashboard using DirectQuery, SQL views and DAX for real-time insights.</li>
               </ul>
             </div>
-
-            <div className="p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-800 rounded-lg">
-              <div className="font-semibold">AI-ML Intern — Edunet Foundation (AICTE)</div>
-              <div className="text-sm text-gray-500">Remote • July 2025</div>
-              <ul className="mt-3 list-disc list-inside text-sm">
+            <div className="p-6 bg-gray-800 rounded-lg shadow">
+              <h3 className="font-semibold">AI-ML Intern — Edunet Foundation (AICTE)</h3>
+              <p className="text-sm text-gray-400">Remote • July 2025</p>
+              <ul className="list-disc list-inside mt-3 text-gray-300">
                 <li>Worked on salary prediction: preprocessing, model training, and evaluation with Python (scikit-learn).</li>
               </ul>
             </div>
@@ -285,60 +207,36 @@ export default function App() {
         </section>
 
         {/* SKILLS */}
-        <section id="skills" className="py-20 border-t border-gray-100">
-          <h2 className="text-2xl font-bold">Skills</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
+        <section id="skills" className="py-24 border-t border-gray-700">
+          <h2 className="text-3xl font-bold border-b-4 border-sky-500 inline-block pb-1 mb-10">Skills</h2>
+          <div className="flex flex-wrap gap-3">
             {skills.map((s) => (
-              <span key={s} className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded text-sm">{s}</span>
+              <span key={s} className="px-4 py-2 bg-gray-800 rounded">{s}</span>
             ))}
           </div>
         </section>
 
         {/* CERTIFICATIONS */}
-        <section id="certifications" className="py-20 border-t border-gray-100">
-          <h2 className="text-2xl font-bold">Certifications</h2>
-          <ul className="mt-4 space-y-2 text-sm">
+        <section id="certifications" className="py-24 border-t border-gray-700">
+          <h2 className="text-3xl font-bold border-b-4 border-sky-500 inline-block pb-1 mb-10">Certifications</h2>
+          <ul className="space-y-2 text-gray-300">
             {certs.map((c) => <li key={c}>• {c}</li>)}
           </ul>
         </section>
 
         {/* CONTACT */}
-        <section id="contact" className="py-20 border-t border-gray-100">
-          <h2 className="text-2xl font-bold">Contact</h2>
-
-          <div className="mt-6">
-            <p className="text-sm text-gray-600">I’m open to internships, collaborations, and full-time roles. Use the form or email directly.</p>
-
-            <form
-              className="mt-6 space-y-3 max-w-xl"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const subject = encodeURIComponent("Website contact from portfolio");
-                const body = encodeURIComponent("Hi Aditya,%0D%0A%0D%0AI saw your portfolio and...");
-                window.location.href = `mailto:${personal.email}?subject=${subject}&body=${body}`;
-              }}
-            >
-              <input required className="w-full p-3 rounded border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800" placeholder="Your name" />
-              <input required type="email" className="w-full p-3 rounded border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800" placeholder="Your email" />
-              <textarea required className="w-full p-3 rounded border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800" rows={5} placeholder="Write a short message" />
-              <div className="flex gap-3">
-                <button type="submit" className="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-md">Send</button>
-                <a href={`mailto:${personal.email}`} className="px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-md">Email directly</a>
-              </div>
-            </form>
-
-            <div className="mt-6 text-sm">
-              <p>Email: <a className="text-sky-600" href={`mailto:${personal.email}`}>{personal.email}</a></p>
-              <p>Phone: {personal.phone}</p>
-              <p>Location: {personal.location}</p>
-            </div>
-          </div>
+        <section id="contact" className="py-24 border-t border-gray-700">
+          <h2 className="text-3xl font-bold border-b-4 border-sky-500 inline-block pb-1 mb-10">Contact</h2>
+          <p className="text-gray-300 mb-6">I’m open to internships, collaborations, and full-time roles. Reach out below.</p>
+          <p>Email: <a href={`mailto:${personal.email}`} className="text-sky-400">{personal.email}</a></p>
+          <p>Phone: {personal.phone}</p>
+          <p>Location: {personal.location}</p>
         </section>
-
-        <footer className="py-10 text-center text-sm text-gray-500">
-          Built with ❤️ • {new Date().getFullYear()} • {personal.name}
-        </footer>
       </main>
+
+      <footer className="py-10 text-center text-gray-500 border-t border-gray-800">
+        Built with ❤️ • {new Date().getFullYear()} • {personal.name}
+      </footer>
     </div>
   );
 }
