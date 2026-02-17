@@ -146,14 +146,8 @@ button:focus-visible {
 
 /* Scroll reveal animation */
 .scroll-reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.scroll-reveal.revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 /* Easing functions */
