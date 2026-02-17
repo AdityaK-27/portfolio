@@ -1,10 +1,10 @@
 import { Linkedin, Github, BarChart3, Table2 } from 'lucide-react';
 
 const socialLinks = [
-  { icon: Linkedin, label: 'LinkedIn', href: 'https://linkedin.com' },
-  { icon: Github, label: 'GitHub', href: 'https://github.com' },
+  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/aditya-kankarwal/' },
+  { icon: Github, label: 'GitHub', href: 'https://github.com/AdityaK-27' },
   { icon: BarChart3, label: 'Portfolio', href: '#' },
-  { icon: Table2, label: 'Tableau', href: '#' },
+  { icon: Table2, label: 'Tableau', href: 'https://public.tableau.com/app/profile/aditya.kankarwal/vizzes' },
 ];
 
 export function Hero() {
